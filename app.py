@@ -33,7 +33,8 @@ def filter_by_category(expenses, category):
     return filtered
 
 
-st.title("💰💰personal expense tracker")
+st.title("💰💰caleb"s expense tracker")
+st.write("this expense tracker was created by caleb offiong james")
 menu = st.sidebar.radio("menu", ["add expenses", "view expenses", "summary"])
 expenses = load_expense()
 if menu == "add expenses":
@@ -66,6 +67,7 @@ elif menu == "summary":
         else:
             filtered_expenses = filter_by_category(expenses, selected_category)
             st.table(filtered_expenses)
+
 
 
 
