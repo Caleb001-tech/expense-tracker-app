@@ -1,0 +1,601 @@
+                # calculator app
+# import
+from PyQt5.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton, QHBoxLayout, QVBoxLayout, QGridLayout
+from PyQt5.QtGui import QFont
+
+# app settings
+app = QApplication([])
+mainWindow = QWidget()
+mainWindow.setWindowTitle("Capzi Calculator App")
+mainWindow.resize(400, 450)
+
+# All objects or widgets
+textbox = QLineEdit()
+textbox.setFont(QFont("papyrus", 36))
+
+grid = QGridLayout()
+
+buttons = (
+    "7", "8", "9", "/",
+    "4", "5", "6", "*",
+    "1", "2", "3", "-",
+    "0", ".", "=", "+",
+)
+
+clear = QPushButton("Clear")
+delete = QPushButton("<")
+clear.setStyleSheet("QPushButton { font: 50pt comic sands ms; padding 50px }")
+delete.setStyleSheet("QPushButton { font: 50pt comic sands ms; padding 50px }")
+
+def buttonclick():
+    button = app.sender()
+    text = button.text()
+
+    if text == "=":
+        symbol = textbox.text()
+        try:
+            res = eval(symbol)
+            textbox.setText(str(res))
+        except Exception as e:
+            print("Error:", e)
+
+    elif text == "Clear":
+        textbox.clear()
+
+    elif text == "<":
+        currentvalue = textbox.text()
+        textbox.setText(currentvalue[:-1])
+
+    else:
+        currentvalue = textbox.text()
+        textbox.setText(currentvalue + text)
+
+# loop for the buttons
+row = 0
+col = 0
+for text in buttons:
+    button = QPushButton(text)
+    button.clicked.connect(buttonclick)
+    button.setStyleSheet("QPushButton { font: 50pt comic sands ms; padding 50px }")
+    grid.addWidget(button, row, col)
+    col += 1
+    if col > 3:
+        col = 0
+        row += 1
+
+# Design
+
+masterlayout = QVBoxLayout()
+masterlayout.addWidget(textbox)
+masterlayout.addLayout(grid)
+
+buttonrow = QHBoxLayout()
+buttonrow.addWidget(clear)
+buttonrow.addWidget(delete)
+masterlayout.addLayout(buttonrow)
+masterlayout.setContentsMargins(29, 29, 29, 29)
+
+mainWindow.setLayout(masterlayout)
+
+clear.clicked.connect(buttonclick)
+delete.clicked.connect(buttonclick)
+
+# run
+mainWindow.setStyleSheet("QWidget { background-color: cyan }")
+mainWindow.show()
+app.exec_()
+
+
+
+                  image editor application
+
+# import
+from PIL.ImageOps import mirror, grayscale
+from PyQt5.QtBluetooth import QBluetoothTransferReply
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QListWidget, QHBoxLayout, QComboBox, QVBoxLayout
+from PyQt5.QtCore import Qt
+#
+
+
+
+# settings
+app = QApplication([])
+mainWindow = QWidget()
+mainWindow.setWindowTitle("photoqt")
+mainWindow.resize(950, 750)
+
+
+
+# widgets
+btfolder = QPushButton("folder")
+fileList = QListWidget()
+
+btleft = QPushButton("Left")
+btright = QPushButton("Right")
+mirror = QPushButton("Mirror")
+sharpness = QPushButton("Sharpness")
+gray = QPushButton("Gray")
+contrast = QPushButton("Contrast")
+saturation = QPushButton("Saturation")
+blur = QPushButton("Blur")
+
+
+# box
+filterbox = QComboBox()
+filterbox.addItem("Original")
+filterbox.addItem("Left")
+filterbox.addItem("Right")
+filterbox.addItem("Mirror")
+filterbox.addItem("Sharpness")
+filterbox.addItem("B/W")
+filterbox.addItem("Contrast")
+filterbox.addItem("Saturation")
+filterbox.addItem("Blur")
+
+picturebox = QLabel("image appears here")
+
+
+# design
+masterlayout = QHBoxLayout()
+
+column1 = QVBoxLayout()
+column2 = QVBoxLayout()
+
+column1.addWidget(btfolder)
+column1.addWidget(fileList)
+column1.addWidget(filterbox)
+column1.addWidget(btleft)
+column1.addWidget(btright)
+column1.addWidget(mirror)
+column1.addWidget(sharpness)
+column1.addWidget(gray)
+column1.addWidget(contrast)
+column1.addWidget(saturation)
+column1.addWidget(blur)
+
+column2.addWidget(picturebox)
+
+masterlayout.addLayout(column1)
+masterlayout.addLayout(column2)
+
+mainWindow.setLayout(masterlayout)
+mainWindow.setStyleSheet("background-color: cyan")
+mainWindow.show()
+app.exec_()
+
+
+
+        image editor application with pillow
+
+from PIL import ImageEnhance,ImageFilter, ImageFont, Image,  ImageDraw
+
+with Image.open("red.jpg") as image:
+
+ Black_white = image.convert('L')
+ Black_white.save("black_white.jpg")
+ resize = image.resize((100,100))
+ resize.save("resize.jpg")
+ crop = image.crop((200,200,300,300))
+ crop.save("crop.jpg")
+ draw = ImageDraw.Draw(crop)
+ draw.text((200,200), "Hello World!", fill=(255,255,255))
+ crop.save("crop.jpg")
+ set = ImageEnhance.Color(image).enhance(0.5)
+ set.save("set.jpg")
+
+
+
+        weather app
+from tkinter import *
+from tkinter import ttk
+
+
+win = Tk()
+win.title("weather")
+win.config(background="cyan")
+win.geometry("500x500")
+
+name_label = Label(win, text="capzi weather app",
+                   font=("comic sands ms", 30, "bold", "italic"))
+name_label.place(x=27, y=49, width=430, height=40)
+
+list_name = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
+
+
+com = ttk.Combobox(win, text="weather app", values=list_name,
+                   font=("comic sands ms", 36, "bold", "italic"))
+
+com.place(x=27, y=99, width=430, height=40)
+
+button = Button(win, text="Done", font=("comic sands ms", 36, "bold", "italic"))
+button.place(x=170, y=150, width=125, height=40)
+
+wlabel = Label(win, text="climate", font=("comic sands ms", 20, "bold", "italic"))
+wlabel.place(x=15, y=200, width=150, height=40)
+
+wlabel1 = Label(win, text="", font=("comic sands ms", 20, "bold", "italic"))
+wlabel1.place(x=170, y=200, width=125, height=40)
+
+
+
+wblabel = Label(win, text="Description", font=("comic sands ms", 20, "bold", "italic"))
+wblabel.place(x=15, y=250, width=150, height=40)
+
+wblabel1 = Label(win, text="", font=("comic sands ms", 20, "bold", "italic"))
+wblabel1.place(x=170, y=250, width=125, height=40)
+
+
+
+templabel = Label(win, text="Temperature", font=("comic sands ms", 19, "bold", "italic"))
+templabel.place(x=15, y=300, width=150, height=40)
+
+templabel1 = Label(win, text="", font=("comic sands ms", 19, "bold", "italic"))
+templabel1.place(x=170, y=300, width=125, height=40)
+
+perlabel = Label(win, text="Pressure", font=("comic sands ms", 20, "bold", "italic"))
+perlabel.place(x=15, y=350, width=150, height=40)
+
+perlabel1 = Label(win, text="", font=("comic sands ms", 20, "bold", "italic"))
+perlabel1.place(x=170, y=350, width=125, height=40)
+
+
+win.mainloop()
+
+
+
+
+
+
+                     BOUNCE GAME
+
+import pygame
+import math
+pygame.init()
+screen = pygame.display.set_mode((800, 400))
+pygame.display.set_caption('BOUNCE')
+clock = pygame.time.Clock()
+ball = pygame.Rect(200, 200, 20, 20)
+angle = math.radians(75)
+ball_speed = [-3, -3]
+paddle = pygame.Rect(180, 380, 60, 10)
+paddle_speed = 8
+score = 0
+font = pygame.font.SysFont('comic sands ms', 30)
+def reset_game():
+    global ball, ball_speed, paddle, score
+    ball = pygame.Rect(200, 200, 20, 20)
+    ball_speed = [-3, -3]
+    paddle = pygame.Rect(180, 380, 60, 10)
+    score = 0
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    if ball_speed == [-3, -3]:
+        ball_speed = [3 * math.cos(angle),
+        3 * math.sin(angle)]
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT] and paddle.left > 0:
+        paddle.x -= paddle_speed
+    if keys[pygame.K_RIGHT] and paddle.right < 800:
+        paddle.x += paddle_speed
+
+    ball.x += ball_speed[0]
+    ball.y += ball_speed[1]
+
+    if ball.left < 0 or ball.right > 800:
+        ball_speed[0] = -ball_speed[0]
+    if ball.top < 0:
+        ball_speed[1] = -ball_speed[1]
+    if ball.colliderect(paddle):
+        ball_speed[1] = -ball_speed[1]
+        score += 1
+
+        ball_speed[0] *= 1.1
+        ball_speed[1] *= 1.1
+
+
+
+    if ball.bottom > 400:
+        reset_game()
+
+    screen.fill((1, 1, 1, 1))
+    pygame.draw.ellipse(screen, (255, 1, 1), ball)
+    pygame.draw.rect(screen, (0, 225, 0), paddle)
+    score_text = font.render(f'Score: {score}', True, (255, 255, 255))
+    screen.blit(score_text, (10, 10))
+
+    pygame.display.flip()
+    clock.tick(60)
+pygame.quit()
+
+
+
+
+        tictactoe game
+import pygame
+
+pygame.init()
+screen = pygame.display.set_mode((450, 450))
+pygame.display.set_caption('Tick tac toe')
+
+fondo = pygame.image.load("background.png")
+circle = pygame.image.load("circle.png")
+cross = pygame.image.load("cross.png")
+
+fondo = pygame.transform.scale(
+    fondo,
+    (450, 450))
+circle = pygame.transform.scale(
+    circle,
+    (125, 125))
+cross = pygame.transform.scale(cross, (125, 125))
+coor = [[(0,0),(0,0),(0,0)],
+        [(0,0),(0,0),(0,0)],
+        [(0,0),(0,0),(0,0)]]
+table = [["", "", ""],
+         ["", "", ""],
+         ["", "", ""],]
+
+turno = 'x'
+game_over = False
+clock = pygame.time.Clock()
+while not game_over:
+    clock.tick(30)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            game_over = True
+
+    screen.blit(fondo, (0, 0))
+    screen.blit(circle, (40, 50))
+    screen.blit(cross, (160, 165))
+    pygame.display.update()
+
+pygame.quit()
+
+
+
+
+
+                 training
+print("WELCOME🎉 WELCOME🎉 WELCOME🎉")
+print("You are warmly welcome to Capzi media app. We hope this app meet your needs. Once again welcome🎊.")
+
+print("To continue, please signup below")
+username = input("Enter your username: ")
+password = input("Enter your password: ")
+print("Hurray🎉 You have signed up successfully!")
+print("please login now")
+name = input("Enter your username: ")
+if name == username:
+    print("username matched👍👍💯")
+else:
+    print("username doesn't match❌❌❌")
+passcode = input("Enter your password: ")
+if passcode == password:
+    print("password matched👍👍💯")
+else:
+    print("password doesn't match❌❌❌")
+if name == username and passcode == password:
+    print("login successfully🎉")
+    print("welcome", username)
+else:
+    print("login failed, try again")
+
+
+
+
+
+
+                 loan system
+
+if registration == "no":
+    print("Loan rejected❌❌")
+else:
+    print("Loan accepted")
+
+if loan == "yes" and score < 50:
+    print("Rejected❌❌")
+else:
+    print("Accepted👍")
+
+if revenue < 100000:
+    print("loan rejected❌❌")
+else:
+    print("loan accepted👍")
+if score in range(50,70):
+    print("Loan conditionally approved")
+else:
+    print("loan rejected❌❌")
+if revenue > 500000 and score >= 70:
+    print("Approved👍")
+else:
+    print("Rejected❌❌")
+
+
+                       number guessing game
+import random
+unknown = random.randint(1,100)
+trial = 0
+print("guess a number between 1 and 100")
+while trial < 10:
+    guess = int(input("guess a number between 1 and 100   "))
+    trial += 1
+    if guess < 1 or guess > 100:
+        print("invalid number")
+        continue
+
+    if guess < unknown:
+        print("your guess is too low")
+    elif guess > unknown:
+        print("your guess is too high")
+    else:
+        print("your guess is correct")
+        break
+if trial == 10:
+    print("game over the number was:", unknown)
+
+
+                        tax rate calculator
+name = input("Enter your name: ")
+salary = float(input("Enter your salary: "))
+if salary < 50000:
+    tax_rate = salary * 0.05
+elif salary <= 150000:
+    tax_rate = salary * 0.10
+else:
+    tax_rate = salary * 0.20
+take_home = salary - tax_rate
+print("salary breakdown")
+print("salary:",salary)
+print("tax rate:", tax_rate)
+print("take_home:", take_home)
+if salary < 50000:
+    print("Income Level: Low Level earner")
+elif salary <= 150000:
+    print("Income Level: Middle Level earner")
+else:
+    print("Income Level: High Level earner")
+
+                   Mini calculator
+print("welcome to your calculator app")
+while True:
+    print("1 -- add")
+    print("2 -- subtract")
+    print("3 -- multiply")
+    print("4 -- divide")
+    print("5 -- exit")
+    users_choice = int(input("choose your option:  "))
+    if users_choice == 5:
+        print("thank you, goodbye")
+        break
+    elif users_choice not in range(1, 6):
+        print("enter a valid option")
+        continue
+    num_1 = int(input("enter first number:  "))
+    num_2 = int(input("enter second number:  "))
+    if users_choice == 1:
+        print("your result is", num_1 + num_2)
+    elif users_choice == 2:
+        print("your result is", num_1 - num_2)
+    elif users_choice == 3:
+        print("your result is", num_1 * num_2)
+    elif users_choice == 4:
+        if num_2 == 0:
+            print("division by zero is not allowed")
+            continue
+        print("your result is", num_1 / num_2)
+
+    Pin verification system
+print("Welcome to caleb's pin verification system")
+pin = int(input("Please set your 4 digit pin number: "))
+attemps = 0
+print("NICE")
+
+while attemps < 3:
+    new = input("please input 4 digit pin again:  ")
+
+    if len(new) != 4:
+        print("length of pin must be 4")
+        continue
+    attemps += 1
+    converted = int(new)
+    if converted == pin:
+        print("ACCESS GRANTED👍👍")
+        break
+    elif attemps == 3:
+        print("Too many attempts. system locked")
+        break
+    else:
+        print("WRONG PIN❌❌")
+
+
+        Number guessing game
+
+import random
+print("welcome to this number guessing game🤔🤔")
+Round = 1
+wins = 0
+while Round <= 6:
+    secret_num = random.randint(0, 50)
+    if Round == 6:
+        print("You have exhausted all the rounds, GAME OVER. I hope you enjoyed the game. Would you like to play again? ")
+        print("Congratulations🎊🎉🎉! You have won ", wins, " rounds in total.")
+        break
+    print("starting round ", Round)
+    Round += 1
+    attempts = 0
+
+    while attempts < 4:
+        guess = int(input("I have a secret number between 0 and 50, try guessing it. you have 4 tries for this round:  "))
+        if guess not in range(0,50):
+            print("invalid guess, try again")
+            continue
+        attempts += 1
+        if attempts == 4:
+            print("you are out of guesses for this round try again next round, The secret number was ", secret_num)
+
+        elif guess == secret_num:
+            print("Correct, you won this round👍👍")
+            wins += 1
+            break
+        elif guess > secret_num:
+            print("your guess is too high")
+        elif guess < secret_num:
+            print("your guess is too low")
+        else:
+            pass
+
+
+
+
+           website
+
+
+import streamlit as st
+
+st.title('Caleb website')
+st.image("red.png.jpg", caption="Flower" , width=200)
+st.image("cover page.jpg", caption="cover page" , width=400)
+st.header('Hello everyone')
+st.text("please fill below")
+name = st.text_input(str("enter your name"))
+age = st.number_input("enter your age")
+email = st.text_input("enter your email")
+password = st.number_input("enter your password")
+address = st.text_input("enter your address")
+st.write(f'{name} is {age} years old')
+st.write(f"you live in {address}")
+st.caption('Submit your data')
+if st.button('SUBMIT'):
+    st.success("submitted successfully")
+
+st.header("PRIVACY INFORMATION")
+st.text("This website was created by Caleb Offiong james, therefore no part of this should be illegally reproduced without the prior knowledge of the author, If found guilty you will be penalised. To continue agree to the terms and conditions below")
+agree = st.checkbox('I AGREE')
+if agree:
+    st.success("great")
+option = st.selectbox("choose an option",
+                      ["A male", "A female", "I don't know"])
+if option == "A male":
+    st.write("WONDERFUL")
+else:
+    st.write("you are disqualified")
+st.write("you are", option)
+st.write("how old is your mom?")
+
+
+bio = st.text_area("tell us more about yourself")
+st.write("you said:", bio)
+st.success("CONGRATULATIONS")
+st.color_picker="blue"
+
+
+
+
+
+
+
