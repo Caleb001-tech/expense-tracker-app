@@ -1,0 +1,20 @@
+[
+    {
+        "amount": 999.0,
+        "category": "food",
+        "expense_date": "2026-02-04",
+        "note": ""
+    },
+    {
+        "amount": 999.0,
+        "category": "food",
+        "expense_date": "2026-02-04",
+        "note": "yyyyy"
+    },
+    {
+        "amount": 6675.0,
+        "category": "shopping",
+        "expense_date": "2026-02-04",
+        "note": "yyyyyhhh"
+    }
+]
