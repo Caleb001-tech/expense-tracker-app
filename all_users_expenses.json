@@ -1,0 +1,14 @@
+[
+    {
+        "amount": 8999.0,
+        "category": "food",
+        "expense_date": "2026-02-04",
+        "note": ""
+    },
+    {
+        "amount": 999.0,
+        "category": "transport",
+        "expense_date": "2026-02-04",
+        "note": "jjjj"
+    }
+]
